@@ -1,6 +1,6 @@
 # Buffertag
 
-![buffertag screenshot](https://user-images.githubusercontent.com/5642902/179378193-d75a9ea6-a806-4f9a-8a18-7320e401aad5.png)
+![buffertag screenshot](./docs/shadow-border.png)
 
 Buffertag is a very simple plugin which always shows the buffer name in non-focused
 windows.

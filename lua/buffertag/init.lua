@@ -1,3 +1,4 @@
+local c = require("buffertag.config")
 local M = {}
 
 -- holds any currently open floating windows displaying buffer tags
@@ -10,12 +11,22 @@ function relative_buffer_name(buf_name)
 end
 
 function create_tag_float(parent_win)
-    local buf_name = vim.api.nvim_buf_get_name((vim.api.nvim_win_get_buf(parent_win)))
+    local buf = vim.api.nvim_win_get_buf(parent_win)
+    local buf_name = vim.api.nvim_buf_get_name(buf)
     buf_name = relative_buffer_name(buf_name)
+
+    if vim.api.nvim_buf_get_option(buf, "modified") then
+        buf_name = "[+] " .. buf_name
+    end
 
     -- couldn't determine a buffer name, for whatever reason, just return and dont
     -- tag the buffer.
     if #buf_name <= 0 then
+        return
+    end
+
+    -- only consider normal buffers with files loaded into them.
+    if vim.api.nvim_buf_get_option(buf, "buftype") ~= "" then
         return
     end
 
@@ -28,7 +39,7 @@ function create_tag_float(parent_win)
     vim.api.nvim_buf_set_option(buf, 'modifiable', true)
     vim.api.nvim_buf_set_lines(buf, 0, 0, false, {buf_name})
     vim.api.nvim_buf_set_option(buf, 'modifiable', false)
-
+    
     local popup_conf = {
         relative = "win",
         anchor = "NE",
@@ -38,7 +49,7 @@ function create_tag_float(parent_win)
         focusable = false,
         zindex = 1,
         style = "minimal",
-        border = "rounded",
+        border = c.config.border,
         row = 0,
         col = vim.api.nvim_win_get_width(parent_win),
     }

@@ -81,11 +81,15 @@ function M.remove_buffertags()
 end
 
 local au_id = nil
+
+local enabled = false
+
 function M.enable()
     au_id = vim.api.nvim_create_autocmd(
         {"WinEnter"},
         {callback = M.display_buffertags}
     )
+    enabled = true
     -- run it so an initial window move isn't necessary
     M.display_buffertags()
 end
@@ -94,7 +98,20 @@ function M.disable()
     if au_id ~= nil then
         vim.api.nvim_del_autocmd(au_id)
     end
+    enabled = false
     M.remove_buffertags()
 end
+
+function M.toggle()
+    if enabled then
+        M.disable()
+    else
+        M.enable()
+    end
+end
+
+vim.api.nvim_create_user_command("BuffertagToggle", M.toggle, {
+    desc = "Toggle the Buffertag feature on and off."
+})
 
 return M

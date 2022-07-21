@@ -1,7 +1,7 @@
 local M = {}
     
 M.config = {
-    border = 'shadow'
+    border = 'none'
 }
 
 return M

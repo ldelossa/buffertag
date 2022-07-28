@@ -19,14 +19,16 @@ hard, and I split often.
 Plug 'ldelossa/buffertag'
 ```
 
-## Enable it at any point in your configuration or editing
+## Call setup with an optional config
 ```
-lua require('buffertag').enable()
+lua require('buffertag').setup({
+    border = "none",
+})
 ```
 
-## Disable it when you'are done
+## Toggle it on and off
 ```
-lua require('buffertag').disable()
+: BuffertagToggle
 ```
 
 # Demo

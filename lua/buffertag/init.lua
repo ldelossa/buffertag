@@ -110,8 +110,19 @@ function M.toggle()
     end
 end
 
-vim.api.nvim_create_user_command("BuffertagToggle", M.toggle, {
-    desc = "Toggle the Buffertag feature on and off."
-})
+function M.setup(config)
+    if config ~= nil then
+        for k, v in pairs(config) do
+            c.config[k] = v
+        end
+    end
+
+    vim.api.nvim_create_user_command("BuffertagToggle", M.toggle, {
+        desc = "Toggle the Buffertag feature on and off."
+    })
+
+    -- toggle it on.
+    M.toggle()
+end
 
 return M

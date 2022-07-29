@@ -22,6 +22,8 @@ Plug 'ldelossa/buffertag'
 ## Call setup with an optional config
 ```
 lua require('buffertag').setup({
+    -- accepts any border options that `nvim_open_win` accepts.
+    -- see ":help vim.api.nvim_open_win"
     border = "none",
 })
 ```

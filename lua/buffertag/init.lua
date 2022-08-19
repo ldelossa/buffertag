@@ -35,16 +35,35 @@ function create_tag_float(parent_win)
         vim.api.nvim_err_writeln("details_popup: could not create details buffer")
         return nil
     end
+
+    local popup_text = buf_name
+    -- By default, the popup width is the same as the length of the buffer text we want to show.
+    local popup_width = #buf_name
+
+    local window_width = vim.api.nvim_win_get_width(parent_win)
+    -- Subtract 5 here to give the window a bit of padding - otherwise it can
+    -- look a bit squashed as technically the text fits, but it's right up to
+    -- the very edge of the pane and doesn't look great
+    local window_width_with_padding = window_width - 5;
+
+  if c.config.limit_width and popup_width > window_width_with_padding then
+      popup_width = window_width_with_padding
+      -- Take the last X characters of the buf_name, where X is the available width.
+      -- e.g. if the name is foo/bar/baz.js, and the width is 6, this will return baz.js
+      popup_text = string.sub(popup_text, #buf_name - popup_width + 1, #buf_name)
+    end
+
+
     vim.api.nvim_buf_set_option(buf, 'bufhidden', 'delete')
     vim.api.nvim_buf_set_option(buf, 'modifiable', true)
-    vim.api.nvim_buf_set_lines(buf, 0, 0, false, {buf_name})
+    vim.api.nvim_buf_set_lines(buf, 0, 0, false, {popup_text})
     vim.api.nvim_buf_set_option(buf, 'modifiable', false)
-    
+
     local popup_conf = {
         relative = "win",
         anchor = "NE",
         win = parent_win,
-        width = #buf_name,
+        width = popup_width,
         height = 1,
         focusable = false,
         zindex = 1,

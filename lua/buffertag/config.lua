@@ -1,7 +1,8 @@
 local M = {}
-    
+
 M.config = {
-    border = 'none'
+    border = 'none',
+    limit_width = false,
 }
 
 return M

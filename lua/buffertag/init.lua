@@ -105,7 +105,7 @@ local enabled = false
 
 function M.enable()
     au_id = vim.api.nvim_create_autocmd(
-        {"WinEnter"},
+        {"WinEnter", "WinScrolled"},
         {callback = M.display_buffertags}
     )
     enabled = true

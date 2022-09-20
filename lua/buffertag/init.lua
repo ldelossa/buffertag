@@ -141,7 +141,9 @@ function M.setup(config)
     })
 
     -- toggle it on.
-    M.toggle()
+    if c.config.start_enabled then
+        M.toggle()
+    end
 end
 
 return M

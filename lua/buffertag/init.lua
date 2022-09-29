@@ -53,6 +53,11 @@ function create_tag_float(parent_win)
       popup_text = string.sub(popup_text, #buf_name - popup_width + 1, #buf_name)
     end
 
+    if popup_width >= vim.api.nvim_win_get_width(0) or popup_width < 0 then
+        -- do not paint buffer tag
+        return
+    end
+
 
     vim.api.nvim_buf_set_option(buf, 'bufhidden', 'delete')
     vim.api.nvim_buf_set_option(buf, 'modifiable', true)

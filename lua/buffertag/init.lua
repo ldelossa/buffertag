@@ -4,16 +4,10 @@ local M = {}
 -- holds any currently open floating windows displaying buffer tags
 local float_wins = {}
 
-function relative_buffer_name(buf_name)
-    local cwd = vim.fn.getcwd() .. "/"
-    local rel_name = vim.fn.substitute(buf_name, cwd, "", "")
-    return rel_name
-end
-
 function create_tag_float(parent_win)
     local buf = vim.api.nvim_win_get_buf(parent_win)
     local buf_name = vim.api.nvim_buf_get_name(buf)
-    buf_name = relative_buffer_name(buf_name)
+    buf_name = vim.fn.fnamemodify(buf_name, ":~:.")
 
     if vim.api.nvim_buf_get_option(buf, "modified") then
         buf_name = "[+] " .. buf_name

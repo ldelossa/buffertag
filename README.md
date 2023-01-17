@@ -15,12 +15,12 @@ hard, and I split often.
 # Usage
 
 ## Include in Vim Plug (or your package manager of choice)
-```
+```vim
 Plug 'ldelossa/buffertag'
 ```
 
 ## Call setup with an optional config
-```
+```lua
 lua require('buffertag').setup({
     -- accepts any border options that `nvim_open_win` accepts.
     -- see ":help vim.api.nvim_open_win"
@@ -30,6 +30,9 @@ lua require('buffertag').setup({
     -- be truncated to fit within the pane, ensuring the floating window does not
     -- overlap any other panes.
     limit_width = false,
+    -- if `vim.bo.modified` is `true` for the current buffer,
+    -- display modified symbol before the buffer name.
+    modified_symbol = "[+]", -- other modified symbol: "●" 
 })
 ```
 

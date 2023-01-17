@@ -10,7 +10,7 @@ function create_tag_float(parent_win)
     buf_name = vim.fn.fnamemodify(buf_name, ":~:.")
 
     if vim.api.nvim_buf_get_option(buf, "modified") then
-        buf_name = "[+] " .. buf_name
+        buf_name = c.config.modified_symbol .. " " .. buf_name
     end
 
     -- couldn't determine a buffer name, for whatever reason, just return and dont
